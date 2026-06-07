@@ -366,8 +366,8 @@ To reduce false positives (shadows, small objects, detection errors):
 
 | Name | Student ID | Role |
 |------|-----------|------|
-| **Huỳnh Nhật Hoàng** | 22667391 | Model training, dataset preparation, video inference |
-| **Hồ Minh Hưng** | 22666391 | Image inference, post-processing, evaluation & report |
+| **Huỳnh Nhật Hoàng** | 22667391 | Image inference, post-processing, evaluation & report |
+| **Hồ Minh Hưng** | 22666391 | Model training, dataset preparation, video inference |
 
 - **Course:** Computer Vision and Applications (THỊ GIÁC MÁY TÍNH VÀ ỨNG DỤNG)
 - **Class:** DHKHMT18A
