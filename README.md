@@ -1,9 +1,13 @@
 <div align="center">
 
-![Banner](assets/banner.png)
-
 # 🚶‍♂️ People Counting in Public Spaces
 ### Real-time Person Detection & Counting using YOLOv11 + BoT-SORT
+
+[![Live Demo](https://img.shields.io/badge/%F0%9F%A4%97%20LIVE%20DEMO-Try%20Now!-FF6B35?style=for-the-badge)](https://minhunhooo-crowd-people-counter.hf.space/)&nbsp;&nbsp;[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue?style=for-the-badge)](https://minhunhooo-crowd-people-counter.hf.space/)&nbsp;&nbsp;[![Kaggle Notebook](https://img.shields.io/badge/Kaggle-Notebook-20BEFF?style=for-the-badge&logo=kaggle&logoColor=white)](https://www.kaggle.com)
+
+**🔗 Live Demo: [Crowd People Counter Web App](https://minhunhooo-crowd-people-counter.hf.space/)**
+
+---
 
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![YOLOv11](https://img.shields.io/badge/YOLOv11-Ultralytics-FF6B35?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PC9zdmc+)](https://ultralytics.com)
@@ -12,14 +16,6 @@
 [![Gradio](https://img.shields.io/badge/Gradio-5.9-F97316?style=for-the-badge&logo=gradio&logoColor=white)](https://gradio.app)
 [![CUDA](https://img.shields.io/badge/CUDA-12.4-76B900?style=for-the-badge&logo=nvidia&logoColor=white)](https://developer.nvidia.com/cuda-toolkit)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
-
----
-
-### 🌐 [Live Demo on Hugging Face Spaces](https://minhunhooo-crowd-people-counter.hf.space/)
-
-[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue?style=for-the-badge)](https://minhunhooo-crowd-people-counter.hf.space/)
-
-> Try the app instantly — no installation required. Upload an image or video to count people in real time.
 
 </div>
 
