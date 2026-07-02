@@ -1,0 +1,6 @@
+pydantic==2.10.6
+ultralytics==8.3.225
+gradio==5.9.1
+opencv-python-headless
+numpy
+audioop-lts; python_version >= "3.13"
