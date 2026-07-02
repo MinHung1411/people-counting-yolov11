@@ -9,8 +9,17 @@
 [![YOLOv11](https://img.shields.io/badge/YOLOv11-Ultralytics-FF6B35?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PC9zdmc+)](https://ultralytics.com)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.6-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)](https://pytorch.org)
 [![OpenCV](https://img.shields.io/badge/OpenCV-4.x-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white)](https://opencv.org)
+[![Gradio](https://img.shields.io/badge/Gradio-5.9-F97316?style=for-the-badge&logo=gradio&logoColor=white)](https://gradio.app)
 [![CUDA](https://img.shields.io/badge/CUDA-12.4-76B900?style=for-the-badge&logo=nvidia&logoColor=white)](https://developer.nvidia.com/cuda-toolkit)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+
+---
+
+### 🌐 [Live Demo on Hugging Face Spaces](https://minhunhooo-crowd-people-counter.hf.space/)
+
+[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue?style=for-the-badge)](https://minhunhooo-crowd-people-counter.hf.space/)
+
+> Try the app instantly — no installation required. Upload an image or video to count people in real time.
 
 </div>
 
@@ -19,16 +28,18 @@
 ## 📋 Table of Contents
 
 - [Overview](#-overview)
-- [Demo](#-demo)
+- [Live Demo](#-live-demo)
 - [Key Results](#-key-results)
 - [Architecture](#-architecture)
 - [Dataset](#-dataset)
 - [Training Pipeline](#-training-pipeline)
 - [Inference](#-inference)
+- [Deployment](#-deployment)
 - [Project Structure](#-project-structure)
 - [Quick Start](#-quick-start)
 - [Technical Details](#-technical-details)
-- [Team](#-team)
+- [Author](#-author)
+- [References](#-references)
 
 ---
 
@@ -36,9 +47,10 @@
 
 This project implements a **real-time people counting system** for public spaces using state-of-the-art computer vision techniques. The system is capable of:
 
-- **Detecting and counting people in static images** with geometric filtering to reduce false positives
-- **Tracking and counting people in real-time video streams** using BoT-SORT multi-object tracker
-- **Exporting the trained model** to ONNX and TorchScript for production deployment
+- 🖼️ **Detecting and counting people in static images** with geometric filtering to reduce false positives
+- 🎬 **Tracking and counting people in real-time video streams** using BoT-SORT multi-object tracker
+- 🌐 **Live web application** deployed on Hugging Face Spaces with Gradio UI
+- 📦 **Exporting the trained model** to ONNX and TorchScript for production deployment
 
 The model was **fine-tuned from YOLOv11m** (medium) on the CrowdHuman dataset — one of the most challenging crowd detection benchmarks available — achieving strong performance even in dense crowd scenarios.
 
@@ -46,23 +58,24 @@ The model was **fine-tuned from YOLOv11m** (medium) on the CrowdHuman dataset �
 
 ---
 
-## 🎬 Demo
+## 🌐 Live Demo
 
-### Image Detection
-The system processes an uploaded image, detects all people using YOLO inference, applies geometric bounding box filters (to remove false positives like shadows and small artifacts), and annotates each person with a numbered label and confidence score.
+The application is deployed on **Hugging Face Spaces** and can be accessed directly in the browser:
 
-```
-Input:  Any JPG/PNG image with people
-Output: Annotated image with green bounding boxes, person count overlay
-```
+🔗 **https://minhunhooo-crowd-people-counter.hf.space/**
 
-### Video Tracking
-For video input, the system uses `model.track()` with BoT-SORT tracker to associate detections across frames, showing **current frame people count** (not cumulative).
+| Feature | Description |
+|---------|-------------|
+| 📷 **Image Detection** | Upload any image → instant person count with annotated bounding boxes |
+| 🎬 **Video Tracking** | Upload a video → processed output with ByteTrack multi-object tracking |
+| 🎥 **Live Camera** | Real-time webcam detection with adjustable confidence thresholds |
 
-```
-Input:  MP4/AVI video file
-Output: Processed MP4 video with real-time person count overlay
-```
+**Configurable Parameters:**
+- Confidence threshold (0.1 – 0.9)
+- IoU threshold for NMS
+- Processing resolution (320px – 960px)
+- Frame skip for video processing
+- Maximum processing time limit
 
 ---
 
@@ -271,18 +284,63 @@ model_export.export(format="torchscript", imgsz=1280)
 
 ---
 
+## 🚀 Deployment
+
+The application is deployed as a **Gradio web app** on [Hugging Face Spaces](https://huggingface.co/spaces).
+
+### Deployment Stack
+
+| Component | Technology |
+|-----------|------------|
+| **Web Framework** | Gradio 5.9 |
+| **ML Runtime** | Ultralytics (YOLOv11) |
+| **Tracker** | ByteTrack (optimized for web) |
+| **Platform** | Hugging Face Spaces (CPU) |
+| **CI/CD** | Git-based auto-deploy |
+
+### Features of the Web App
+- **📷 Image Detection** — Upload any image, adjust confidence threshold, get annotated results
+- **🎬 Video Processing** — Upload video with configurable frame skip, IoU, resolution, and time limit
+- **🎥 Live Camera** — Real-time webcam detection with streaming output
+- **⚙️ Tunable Parameters** — Confidence, IoU, resolution, min-hits for tracking stability
+
+### Local Development
+```bash
+cd deployment
+pip install -r requirements.txt
+python app.py
+```
+
+> **Note:** Requires `best.pt` (trained model weights) in the same directory as `app.py`.
+
+### Deployment Files
+
+```
+deployment/
+├── app.py              # Gradio application (image, video, webcam tabs)
+├── requirements.txt    # Python dependencies
+└── README.md           # Hugging Face Spaces metadata
+```
+
+---
+
 ## 📁 Project Structure
 
 ```
 people-counting-yolov11/
 │
 ├── 📓 notebook/
-│   └── people_counting_yolov11.ipynb   # Main Jupyter notebook (full pipeline)
+│   └── people_counting_yolov11.ipynb   # Full training & inference pipeline
+│
+├── 🚀 deployment/
+│   ├── app.py                           # Gradio web application
+│   ├── requirements.txt                 # Deployment dependencies
+│   └── README.md                        # HF Spaces config
 │
 ├── 🖼️ assets/
 │   └── banner.png                       # Project banner
 │
-├── 📄 README.md                         # This file
+├── 📄 README.md                         # Project documentation (this file)
 ├── 📄 LICENSE                           # MIT License
 └── 📄 .gitignore
 ```
@@ -304,7 +362,11 @@ people-counting-yolov11/
 
 ## ⚡ Quick Start
 
-### 1. Open the Notebook on Kaggle / Google Colab
+### 1. Try the Live Demo (No Setup Required)
+
+[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Try%20Live%20Demo-Hugging%20Face-blue?style=for-the-badge)](https://minhunhooo-crowd-people-counter.hf.space/)
+
+### 2. Open the Notebook on Kaggle / Google Colab
 
 Click to open in Kaggle:
 
@@ -314,21 +376,22 @@ Or open in Google Colab:
 
 [![Colab](https://img.shields.io/badge/Run%20on-Google%20Colab-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white)](https://colab.research.google.com)
 
-### 2. Install Dependencies
+### 3. Install Dependencies
 
 ```bash
-pip install ultralytics==8.3.225 opencv-python matplotlib
+pip install ultralytics==8.3.225 opencv-python matplotlib gradio
 ```
 
-### 3. Run Training (requires GPU)
+### 4. Run Training (requires GPU)
 
 Open `notebook/people_counting_yolov11.ipynb` and run all cells sequentially.
 
-### 4. Inference on Your Own Images/Videos
+### 5. Inference on Your Own Images/Videos
 
 After training is complete:
 - **Image:** Upload any image → get annotated result with person count
 - **Video:** Upload any MP4 → get processed video with real-time counter
+- **Web App:** Launch the Gradio app for an interactive demo
 
 ---
 
@@ -348,7 +411,7 @@ After training is complete:
 To reduce false positives (shadows, small objects, detection errors):
 
 | Filter | Image Mode | Video Mode | Purpose |
-|--------|-----------|-----------|---------|
+|--------|-----------|-----------|---------| 
 | Min height | ≥ 90px | ≥ 120px | Remove tiny detections |
 | Min width | ≥ 40px | ≥ 60px | Remove narrow artifacts |
 | Max aspect ratio | ≤ 6 | — | Remove pole-like false positives |
@@ -356,18 +419,37 @@ To reduce false positives (shadows, small objects, detection errors):
 
 ### Confidence Thresholds
 | Mode | Threshold | Rationale |
-|------|-----------|-----------|
+|------|-----------|-----------| 
 | Image | `conf=0.35` | Balanced: captures partially visible people |
 | Video | `conf=0.50` | Stricter: reduces noisy inter-frame detections |
 
 ---
 
-## 👥 Team
+## 👤 Author
 
-| Name | Student ID | Role |
-|------|-----------|------|
-| **Huỳnh Nhật Hoàng** | 22667391 | Image inference, post-processing, evaluation & report |
-| **Hồ Minh Hưng** | 22666391 | Model training, dataset preparation, video inference |
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/MinHung1411">
+        <img src="https://github.com/MinHung1411.png" width="100px;" alt="Hồ Minh Hưng"/><br />
+        <sub><b>Hồ Minh Hưng</b></sub>
+      </a><br />
+      <sub>MSSV: 22666391</sub>
+    </td>
+  </tr>
+</table>
+
+### Responsibilities
+
+| Area | Details |
+|------|---------|
+| 🧠 **Model Training** | Fine-tuned YOLOv11m on CrowdHuman dataset (50 epochs) with advanced augmentation |
+| 📊 **Dataset Preparation** | Downloaded, preprocessed, and configured CrowdHuman for YOLO format |
+| 🎬 **Video Inference** | Implemented BoT-SORT tracking pipeline with geometric filtering |
+| 🚀 **Deployment** | Built Gradio web app and deployed to Hugging Face Spaces |
+| 📝 **Documentation** | Project README, architecture diagrams, and technical documentation |
+
+### Project Context
 
 - **Course:** Computer Vision and Applications (THỊ GIÁC MÁY TÍNH VÀ ỨNG DỤNG)
 - **Class:** DHKHMT18A
@@ -375,6 +457,12 @@ To reduce false positives (shadows, small objects, detection errors):
 - **Supervisor:** Dr. Lê Thị Vĩnh Thanh
 - **Institution:** University – Faculty of Computer Science
 - **Academic Year:** 2025–2026, Semester I
+
+### Collaborator
+
+| Name | Student ID | Role |
+|------|-----------|------|
+| **Huỳnh Nhật Hoàng** | 22667391 | Image inference, post-processing, evaluation & report |
 
 ---
 
@@ -384,6 +472,8 @@ To reduce false positives (shadows, small objects, detection errors):
 - [CrowdHuman Dataset](https://www.crowdhuman.org/)
 - [BoT-SORT: Robust Associations Multi-Pedestrian Tracking](https://arxiv.org/abs/2206.14651)
 - [Kaggle Dataset: crowd-human-crowd-detection](https://www.kaggle.com/datasets/menhari/crowd-human-crowd-detection)
+- [Gradio Documentation](https://gradio.app/docs/)
+- [Hugging Face Spaces](https://huggingface.co/docs/hub/spaces)
 
 ---
 
@@ -391,6 +481,6 @@ To reduce false positives (shadows, small objects, detection errors):
 
 **⭐ If this project helped you, please give it a star! ⭐**
 
-Made with ❤️ by Nhóm 18 — DHKHMT18A
+Made with ❤️ by **Hồ Minh Hưng** — DHKHMT18A
 
 </div>
